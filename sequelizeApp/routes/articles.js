@@ -13,9 +13,11 @@ router.post('/', async (req, res, next) => {
     slug: slug,
     title : title,
     body: body
-  }).then(function() {
+  })
+    .then(() => {
     res.send('articolo creato');
-  });
+  })
+    .catch(err => res.send(err.errors));
 })
 
 /* GET articles listing. */
@@ -23,7 +25,7 @@ router.get('/', async (req, res, next) => {
   db.articles.findAll()
     .then(articles => {
       res.json(articles)
-    })
+    }).catch(err => res.send(err.errors));
   // res.send('articles route');
 });
 
