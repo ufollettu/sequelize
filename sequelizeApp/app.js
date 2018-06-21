@@ -32,8 +32,8 @@ models.sequelize.authenticate().then(() => {
   console.error('Unable to connect to SQL database:', err);
 });
 if(config.database === 'sequelize_dev'){
-  models.sequelize.sync();//creates tables from models
-  // models.sequelize.sync({ force: true });//good for testing
+  // models.sequelize.sync(); //creates tables from models (do note update!)
+  models.sequelize.sync({ force: true }); //delete previous tables, good for testing
 }
 
 // CORS

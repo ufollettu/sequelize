@@ -1,11 +1,26 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Article = sequelize.define('Article', {
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT
+  var Article = sequelize.define('Articles', {
+    slug: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      unique: true, // (UNIQUE)
+      allowNull: false // required (NOT NULL)
+    },
+    // body: DataTypes.TEXT,
+    body: {
+      type: DataTypes.TEXT,
+      defaultValue: 'titolo di default'
+    }
+
   }, {
     paranoid: true,
-    underscored: true
+    underscored: true,
+    timestamps: false,
+    // freezeTableName: true
   });
   Article.associate = function(models) {
     // associations can be defined here
