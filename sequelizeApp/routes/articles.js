@@ -5,15 +5,23 @@ var db = require('../models');
 
 router.post('/', async (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
-  const title = req.body.title;
-  const body = req.body.body;
-  const slug = req.body.slug;
-
-  db.articles.create({
-    slug: slug,
-    title : title,
-    body: body
+  const body = {
+    slug: req.body.slug,
+    title: req.body.title,
+    body: req.body.body
+  };
+  
+  db.articles.create(body, {
+    fields: ['title', 'body'] // whitelist: only set this fields (slug: "")
   })
+
+  // build and save are the same as create
+  // db.articles.build({
+  //   slug: slug,
+  //   title : title,
+  //   body: body
+  // }).save()
+
     .then(() => {
     res.send('articolo creato');
   })

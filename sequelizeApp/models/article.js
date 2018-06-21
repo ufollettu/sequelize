@@ -20,18 +20,18 @@ module.exports = (sequelize, DataTypes) => {
     body: {
       type: DataTypes.TEXT,
       // defaultValue: 'titolo di default'
-      validate: {
-        // set a validation function
-        startsWithUpper: (bodyVal)=>{
-          let first = bodyVal.charAt(0);
-          let startsWithUpper = first === first.toUpperCase();
-          if (!startsWithUpper) {
-            throw new Error('first letter must be uppercase');
-          } else {
-            // ...
-          }
-        }
-      }
+      // validate: {
+      //   // set a validation function
+      //   startsWithUpper: (bodyVal)=>{
+      //     let first = bodyVal.charAt(0);
+      //     let startsWithUpper = first === first.toUpperCase();
+      //     if (!startsWithUpper) {
+      //       throw new Error('first letter must be uppercase');
+      //     } else {
+      //       // ...
+      //     }
+      //   }
+      // }
     }
 
   }, {
@@ -39,6 +39,16 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
     timestamps: false,
     // freezeTableName: true
+    hooks: {
+      beforeValidate: () => {},
+      afterValidate: () => {},
+      beforeCreate: () => {
+
+      },
+      afterCreate: () => {
+
+      },
+    }
   });
   Article.associate = function(models) {
     // associations can be defined here
