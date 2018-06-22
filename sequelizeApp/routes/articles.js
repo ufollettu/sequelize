@@ -8,12 +8,17 @@ router.post('/', async (req, res, next) => {
   const body = {
     slug: req.body.slug,
     title: req.body.title,
-    body: req.body.body
+    body: req.body.body,
+    timestamp: new Date()
   };
   
   db.articles.create(body, {
-    fields: ['title', 'body'] // whitelist: only set this fields (slug: "")
+    fields: ['slug', 'title','body', 'timestamp'] // whitelist: only set this fields (slug: "")
   })
+    .then(() => {
+    res.send('articolo creato');
+  })
+    .catch(err => res.send(err.errors));
 
   // build and save are the same as create
   // db.articles.build({
@@ -21,11 +26,6 @@ router.post('/', async (req, res, next) => {
   //   title : title,
   //   body: body
   // }).save()
-
-    .then(() => {
-    res.send('articolo creato');
-  })
-    .catch(err => res.send(err.errors));
 })
 
 /* GET articles listing. */
@@ -38,12 +38,23 @@ router.get('/', async (req, res, next) => {
 });
 
 /* GET single article. */
-router.get('/:id', async (req, res, next) => {
+router.get('/:id&:title', async (req, res, next) => {
   const articleId = req.params.id;
-  db.articles.findById(articleId)
-    .then(article => {
-      res.json(article)
-    })
+  const articleTitle = req.params.title;
+  // SELECT `title` FROM `Articles` AS `Articles` 
+  // WHERE `Articles`.`slug` = 'titoaee' AND `Articles`.`title` = 'icwsssdoaaaaaa';
+  db.articles.findAll({
+    attributes: ['timestamp'],
+    where: {
+      slug: articleId,
+      title: articleTitle
+    }
+  })
+  .then(articles => res.json(articles));
+  // db.articles.findById(articleId)
+  //   .then(article => {
+  //     res.json(article)
+  //   })
   // res.send('articles route');
 });
 
