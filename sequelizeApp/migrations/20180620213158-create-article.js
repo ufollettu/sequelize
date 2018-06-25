@@ -2,17 +2,17 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Articles', {
-      // id: {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      // ss_id: {
       //   allowNull: false,
       //   autoIncrement: true,
       //   primaryKey: true,
       //   type: Sequelize.INTEGER
-      // },
-      // slug: {
-      //   allowNull: false,
-      //   // autoIncrement: true,
-      //   primaryKey: true,
-      //   type: Sequelize.STRING
       // },
       title: {
         type: Sequelize.STRING
@@ -20,11 +20,7 @@ module.exports = {
       body: {
         type: Sequelize.TEXT
       },
-      created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updated_at: {
+      timestamp: {
         allowNull: false,
         type: Sequelize.DATE
       }

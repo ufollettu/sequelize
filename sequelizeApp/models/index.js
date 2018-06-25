@@ -34,11 +34,13 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // Import Models such that I can use them in the api just by importing 'db'
-// db.user = require('./user')(sequelize, Sequelize);
+db.user = require('./user')(sequelize, Sequelize);
 // db.admin = require('./admin')(sequelize, Sequelize);
 db.articles = require('./article')(sequelize, Sequelize);
 
-// Relations
+// Relations (same as Model.associate --> use here instead of in Model definition)
+
+db.articles.belongsTo(db.user);
 
 
 module.exports = db;

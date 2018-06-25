@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('home');
+router.get('/', async (req, res, next) => {
+    res.render('signup');
+  
 });
 
 module.exports = router;
