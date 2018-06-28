@@ -4,12 +4,11 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-// var bodyParser = require('body-parser');
 var logger = require('morgan');
 var passport = require('passport');
-// var session = require('express-session');
 var exphbs = require('express-handlebars');
 
+require('./config/passport');
 var models = require('./models');
 
 var signupRouter = require('./routes/signup');
@@ -38,9 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })); // session secret
 app.use(passport.initialize());
 // app.use(passport.session()); // persistent login sessions
-
-//load passport strategies
-// require('./config/passport/passport'); 
 
 // DB
 models.sequelize.authenticate().then(() => {
