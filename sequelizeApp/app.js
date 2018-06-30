@@ -8,11 +8,9 @@ var logger = require('morgan');
 var passport = require('passport');
 var exphbs = require('express-handlebars');
 
-require('./config/passport');
 var models = require('./models');
 
-var signupRouter = require('./routes/signup');
-var signinRouter = require('./routes/signin');
+var authRouter = require('./routes/auth');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -37,6 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })); // session secret
 app.use(passport.initialize());
 // app.use(passport.session()); // persistent login sessions
+
+//load passport strategies
+// require('./config/passport')(passport, models.user);
+require('./config/passport');
 
 // DB
 models.sequelize.authenticate().then(() => {
@@ -71,8 +73,7 @@ app.use(function (req, res, next) {
 // Routes
 app.use('/', indexRouter);
 
-app.use('/signup', signupRouter);
-app.use('/signin', signinRouter);
+app.use('/auth', authRouter);
 
 app.use('/users', usersRouter);
 app.use('/articles', articlesRouter);
