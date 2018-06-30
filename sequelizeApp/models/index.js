@@ -37,7 +37,6 @@ db.Sequelize = Sequelize;
 
 // Import Models such that I can use them in the api just by importing 'db'
 db.user = require('./user')(sequelize, Sequelize);
-// db.admin = require('./admin')(sequelize, Sequelize);
 db.articles = require('./article')(sequelize, Sequelize);
 
 // Relations (same as Model.associate --> use here instead of in Model definition)
@@ -53,11 +52,5 @@ db.user.hook('beforeCreate', async (user, options) => {
       throw new Error(err);
     });
 });
-
-// Methods
-// db.user.prototype.comparePassword = async (password) => {
-//   return await bcrypt.compare(password, db.user.password)
-// }
-
 
 module.exports = db;

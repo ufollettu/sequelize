@@ -55,7 +55,6 @@ passport.use('login', new LocalStrategy({
     const isValidPassword = (userpass, password) => {
         return bcrypt.compare(password, userpass);
     }
-    //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
     return db.user.findOne({ where: { username: username } })
         .then(user => {
             if (!user) {

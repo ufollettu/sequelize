@@ -8,15 +8,15 @@ const authController = require('../controllers/auth.server.controller');
 
 router.get('/signin', authController.signin);
 
-router.post('/signin', function (req, res, next) {
-    passport.authenticate('login', { session: false }, (err, user, info) => {
+router.post('/signin', async (req, res, next) => {
+    passport.authenticate('login', { session: false }, async (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({
                 message: info ? info.message : 'Login failed',
                 user: user
             });
         }
-        req.login(user, { session: false }, (err) => {
+        req.login(user, { session: false }, async (err) => {
             if (err) {
                 res.send(err);
             }
@@ -24,7 +24,7 @@ router.post('/signin', function (req, res, next) {
             const token = jwt.sign(user.id, secretOrKey);
             return res.json({ user, token });
         });
-    })(req, res);
+    })(req, res, next);
 })
 
 router.get('/signup', authController.signup);
@@ -39,7 +39,7 @@ router.post('/signup', passport.authenticate('signup', { session: false }), asyn
 });
 
 router.post('/logout'), async () => {
-
+    // we need to destroy token in client end
 }
 
 module.exports = router;
